@@ -1,7 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export function useAudioContext() {
-  const audioCtx = new AudioContext();
+  const audioCtxRef = useRef();
+  if (!audioCtxRef.current) {
+    // Create once.
+    audioCtxRef.current = new AudioContext();
+  }
+  const audioCtx = audioCtxRef.current;
 
   function pause() {
     audioCtx.suspend();
