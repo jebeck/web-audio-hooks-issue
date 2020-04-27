@@ -1,8 +1,23 @@
 import { useEffect } from 'react';
 
-export function useAudioContext() {
-  const audioCtx = new AudioContext();
+export function makeGetAudioCtxSingleton() {
+  let ctx;
 
+  function createAudioCtx() {
+    return new AudioContext();
+  }
+
+  return () => {
+    if (!ctx) {
+      ctx = createAudioCtx();
+    }
+    return ctx;
+  };
+}
+
+export function useAudioContext({ getAudioCtx }) {
+  const audioCtx = getAudioCtx()
+  
   function pause() {
     audioCtx.suspend();
   }

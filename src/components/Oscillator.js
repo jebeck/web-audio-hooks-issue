@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect } from 'react';
 import bows from 'bows';
 
-import { useAudioContext } from '../hooks/useAudioContext';
+import { withAudioContext } from '../hoc/withAudioContext';
 
-function Oscillator({ frequency }) {
-  const {audioCtx, pause, play } = useAudioContext()
+function Oscillator({ audioCtx, pause, play, frequency }) {
   const log = useCallback((msg) => bows(`Osc @ ${frequency || 440}Hz`)(msg), [
     frequency,
   ]);
@@ -28,4 +27,4 @@ function Oscillator({ frequency }) {
   );
 }
 
-export default Oscillator
+export default withAudioContext(Oscillator)
