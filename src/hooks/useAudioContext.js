@@ -2,22 +2,27 @@ import { useEffect, useRef } from "react";
 
 export function useAudioContext() {
   const audioCtxRef = useRef();
-  if (!audioCtxRef.current) {
-    // Create once.
-    console.log("Creating AudioContext");
-    audioCtxRef.current = new AudioContext();
+  
+  function getContext() {
+    if (!audioCtxRef.current) {
+      // Create once.
+      console.log("Creating AudioContext");
+      audioCtxRef.current = new AudioContext();
+    }
+    return audioCtxRef.current;
   }
-  const audioCtx = audioCtxRef.current;
 
   function pause() {
-    audioCtx.suspend();
+    getContext().suspend();
   }
 
   function play() {
-    audioCtx.resume();
+    getContext().resume();
   }
 
   useEffect(() => {
+    const audioCtx = getContext();
+
     /** auto-play is very rude */
     if (audioCtx.state === "running") {
       audioCtx.suspend();
@@ -26,7 +31,7 @@ export function useAudioContext() {
     return () => {
       audioCtx.close();
     };
-  }, [audioCtx]);
+  }, []);
 
-  return { audioCtx, pause, play };
+  return { getContext, pause, play };
 }
