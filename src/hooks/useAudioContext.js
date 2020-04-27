@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 export function useAudioContext() {
   const audioCtxRef = useRef();
   if (!audioCtxRef.current) {
     // Create once.
+    console.log("Creating AudioContext");
     audioCtxRef.current = new AudioContext();
   }
   const audioCtx = audioCtxRef.current;
@@ -18,7 +19,7 @@ export function useAudioContext() {
 
   useEffect(() => {
     /** auto-play is very rude */
-    if (audioCtx.state === 'running') {
+    if (audioCtx.state === "running") {
       audioCtx.suspend();
     }
 

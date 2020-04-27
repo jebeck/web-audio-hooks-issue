@@ -1,24 +1,20 @@
-import React, { useCallback, useEffect } from 'react';
-import bows from 'bows';
+import React, { useEffect } from "react";
 
-import { useAudioContext } from '../hooks/useAudioContext';
+import { useAudioContext } from "../hooks/useAudioContext";
 
 function Oscillator({ frequency }) {
-  const {audioCtx, pause, play } = useAudioContext()
-  const log = useCallback((msg) => bows(`Osc @ ${frequency || 440}Hz`)(msg), [
-    frequency,
-  ]);
-  log(`Oscillator rendered with frequency: ${frequency || 440}Hz`);
+  console.log(`Oscillator rendered with frequency: ${frequency || 440}Hz`);
+  const { audioCtx, pause, play } = useAudioContext();
 
   useEffect(() => {
-    log(`create oscillator with frequency: ${frequency || 440}Hz`);
+    console.log(`Create oscillator with frequency: ${frequency || 440}Hz`);
     const oscillator = audioCtx.createOscillator();
     if (frequency) {
       oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
     }
     oscillator.connect(audioCtx.destination);
     oscillator.start();
-  }, [audioCtx, frequency, log]);
+  }, [audioCtx, frequency]);
 
   return (
     <div>
@@ -28,4 +24,4 @@ function Oscillator({ frequency }) {
   );
 }
 
-export default Oscillator
+export default Oscillator;

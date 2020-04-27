@@ -1,12 +1,9 @@
-import React from 'react';
-import bows from 'bows';
+import React from "react";
 
-import Oscillator from './components/Oscillator';
-
-const log = bows('App');
+import Oscillator from "./components/Oscillator";
 
 function App() {
-  log('rendered App');
+  console.log("App rendered");
   return (
     <>
       <Oscillator />
