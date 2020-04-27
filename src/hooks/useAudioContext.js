@@ -1,13 +1,14 @@
 import { useEffect, useRef } from "react";
 
+// Shared between all components.
+let audioCtx;
+
 export function useAudioContext() {
-  const audioCtxRef = useRef();
-  if (!audioCtxRef.current) {
+  if (!audioCtx) {
     // Create once.
     console.log("Creating AudioContext");
-    audioCtxRef.current = new AudioContext();
+    audioCtx = new AudioContext();
   }
-  const audioCtx = audioCtxRef.current;
 
   function pause() {
     audioCtx.suspend();
